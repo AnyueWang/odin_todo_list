@@ -1,12 +1,15 @@
-const createTodo = (title, dueDate, description = '', priority = 0, project = undefined, isDone = false) => {
-    return {
+const createTodo = (title, dueDate, description = '', priority = 0, isDone = false, checklist = []) => {
+    const id = Date.now()
+    const todo = {
+        id,
         title,
         dueDate,
         description,
         priority,
-        project,
         isDone,
+        checklist,
     }
+    return todo
 }
 
 module.exports = {
