@@ -7,16 +7,17 @@ const getProjectList = () => projectList
 
 const addProject = (project) => projectList.push(project)
 
-const getDefaultProject = () => defaultProject
-
 const addNewProject = (title, description) => {
+    const titles = projectList.map(eachProject => eachProject.title)
+    if (titles.includes(title)) return false
     const newProject = project.createProject(title, description)
     addProject(newProject)
+    return newProject
 }
 
 module.exports = {
+    defaultProject,
+
     getProjectList,
-    addProject,
-    getDefaultProject,
     addNewProject,
 }
