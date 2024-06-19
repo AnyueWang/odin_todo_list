@@ -1,5 +1,5 @@
-const todo = require('./todo')
-const project = require('./project')
+const todo = require('./models/todo')
+const project = require('./models/project')
 
 const defaultProject = project.createProject('Default')
 
