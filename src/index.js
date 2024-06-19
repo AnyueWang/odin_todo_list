@@ -11,3 +11,4 @@ const itemTodo = todo.createTodo(
 
 console.log(itemTodo)
 console.log(defaultProject)
+console.log(itemTodo.isOverdue())
