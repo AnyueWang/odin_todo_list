@@ -1,5 +1,6 @@
 const todos = require('./controllers/todos')
 const projects = require('./controllers/projects')
+require('./styles.css')
 
 todos.addNewTodo('Shopping for food',
     new Date(2030, 5, 2),
