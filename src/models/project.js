@@ -1,7 +1,10 @@
-const createProject = (title, description = '', todos = []) => {
+const createProject = (title, description = '') => {
+    const todos = []
+
     const addTodo = (todo) => {
         todos.push(todo)
     }
+
     return {
         title,
         description,
