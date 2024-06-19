@@ -1,6 +1,6 @@
 const todo = require('../models/todo')
 
-const todoList = []
+let todoList = []
 
 const getTodoList = () => todoList
 
@@ -16,8 +16,13 @@ const getTodosInProject = (project) => {
     return todoList.filter(eachTodo => eachTodo.project.title === project.title)
 }
 
+const deleteTodo = (todo) => {
+    todoList = todoList.filter(eachTodo => eachTodo.id !== todo.id)
+}
+
 module.exports = {
     getTodoList,
     addNewTodo,
     getTodosInProject,
+    deleteTodo,
 }

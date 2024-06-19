@@ -1,6 +1,7 @@
 const project = require('../models/project')
 
-const defaultProject = project.createProject('Default')
+const defaultTitle = 'Default'
+const defaultProject = project.createProject(defaultTitle)
 const projectList = [defaultProject]
 
 const getProjectList = () => projectList
@@ -15,9 +16,15 @@ const addNewProject = (title, description) => {
     return newProject
 }
 
+const deleteProject = (project) => {
+    if (project.title === defaultTitle) return false
+    projectList = projectList.filter(eachProject => eachProject.title !== project.title)
+}
+
 module.exports = {
     defaultProject,
 
     getProjectList,
     addNewProject,
+    deleteProject,
 }

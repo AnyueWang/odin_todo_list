@@ -33,3 +33,6 @@ console.log(todos.getTodoList())
 console.log(projects.getProjectList())
 
 console.log(todos.getTodosInProject(newProject))
+
+todos.deleteTodo(todoList[0])
+console.log(todos.getTodoList())
