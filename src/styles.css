@@ -13,6 +13,9 @@
     --list-background-color: rgb(255, 158, 174);
     --hover-color: red;
     --hover-background-color: paleturquoise;
+    --expanded-background-color: rgb(175, 238, 196);
+    --details-color: rgb(200, 51, 226);
+    --details-background-color: rgb(249, 154, 202);
 }
 
 body {
@@ -95,4 +98,24 @@ a {
 .task-nav:hover {
     color: var(--hover-color);
     background-color: var(--hover-background-color);
+}
+
+.task-nav-expanded {
+    color: var(--titles-color);
+    background-color: var(--expanded-background-color);
+}
+
+.task-details {
+    padding-left: 10%;
+    padding-right: 10%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background-color: var(--details-background-color);
+    margin-top: 5px;
+    width: 80%;
+}
+
+.task-details p {
+    color: var(--details-color);
+    margin: 5px;
 }

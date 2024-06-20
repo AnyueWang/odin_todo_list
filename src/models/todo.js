@@ -1,5 +1,5 @@
 const createTodo = (title, dueDate, project, description = '', priority = 0, isDone = false, checklist = []) => {
-    const id = Math.floor(new Date().valueOf()*Math.random())
+    const id = Math.floor(new Date().valueOf()*Math.random()).toString()
 
     const isOverdue = () => {
         return dueDate < new Date() 

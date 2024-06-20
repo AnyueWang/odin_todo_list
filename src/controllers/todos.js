@@ -1,3 +1,4 @@
+const { each } = require('lodash')
 const todo = require('../models/todo')
 
 let todoList = []
@@ -20,9 +21,14 @@ const deleteTodo = (todo) => {
     todoList = todoList.filter(eachTodo => eachTodo.id !== todo.id)
 }
 
+const findTodo = (id) => {
+    return todoList.find(eachTodo => eachTodo.id === id)
+}
+
 module.exports = {
     getTodoList,
     addNewTodo,
     getTodosInProject,
     deleteTodo,
+    findTodo,
 }
