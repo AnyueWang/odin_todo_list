@@ -44,12 +44,23 @@ const ulTodos = document.querySelector("#todo-list")
 
 projects.getProjectList().forEach(eachProject => {
     const newLi = document.createElement("li")
-    newLi.textContent = `${eachProject.title}`
+    const newAnchor = document.createElement('a')
+    newAnchor.textContent = `${eachProject.title}`
+    newAnchor.classList.add('project-nav')
+    newLi.appendChild(newAnchor)
     ulProjects.appendChild(newLi)
 })
 
 todos.getTodoList().forEach(eachTodo => {
     const newLi = document.createElement("li")
-    newLi.textContent = `${eachTodo.title} ${format(eachTodo.dueDate, 'EEE dd-MMM-yyyy')}`
+    const newAnchor = document.createElement('div')
+    const title = document.createElement('div')
+    const date = document.createElement('div')
+    title.textContent = eachTodo.title
+    date.textContent = format(eachTodo.dueDate, 'dd-MMM-yyyy')
+    newAnchor.appendChild(title)
+    newAnchor.appendChild(date)
+    newAnchor.classList.add('task-nav')
+    newLi.appendChild(newAnchor)
     ulTodos.appendChild(newLi)
 })
