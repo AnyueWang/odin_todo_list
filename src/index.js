@@ -1,6 +1,7 @@
 const todos = require('./controllers/todos')
 const projects = require('./controllers/projects')
 require('./styles.css')
+const {compareAsc, format} = require('date-fns')
 
 todos.addNewTodo('Shopping for food',
     new Date(2030, 5, 2),
@@ -37,3 +38,18 @@ console.log(todos.getTodosInProject(newProject))
 
 todos.deleteTodo(todoList[0])
 console.log(todos.getTodoList())
+
+const ulProjects = document.querySelector("#project-list")
+const ulTodos = document.querySelector("#todo-list")
+
+projects.getProjectList().forEach(eachProject => {
+    const newLi = document.createElement("li")
+    newLi.textContent = `${eachProject.title}`
+    ulProjects.appendChild(newLi)
+})
+
+todos.getTodoList().forEach(eachTodo => {
+    const newLi = document.createElement("li")
+    newLi.textContent = `${eachTodo.title} ${format(eachTodo.dueDate, 'EEE dd-MMM-yyyy')}`
+    ulTodos.appendChild(newLi)
+})
