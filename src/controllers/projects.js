@@ -1,10 +1,8 @@
 const project = require('../models/project')
 
-const allTitle = 'All'
-const allProject = project.createProject(allTitle)
 const defaultTitle = 'Default'
 const defaultProject = project.createProject(defaultTitle)
-const projectList = [allProject, defaultProject]
+const projectList = [defaultProject]
 
 const getProjectList = () => projectList
 const getProjectByName = (name) => {
@@ -24,7 +22,7 @@ const addNewProject = (title, description) => {
 }
 
 const deleteProject = (project) => {
-    if (project.title === defaultTitle || project.title === allTitle) return false
+    if (project.title === defaultTitle) return false
     projectList = projectList.filter(eachProject => eachProject.title !== project.title)
 }
 

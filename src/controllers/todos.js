@@ -13,23 +13,23 @@ const addNewTodo = (title, dueDate, project, description, priority, isDone, chec
     return newTodo
 }
 
-const getTodosInProject = (project) => {
-    if (project.title === 'All') return todoList
-    return todoList.filter(eachTodo => eachTodo.project.title === project.title)
+const getTodosByProject = (project) => {
+    if (project.title === 'Default') return todoList
+    return todoList.filter(eachTodo => eachTodo.project === project)
 }
 
 const deleteTodo = (todo) => {
     todoList = todoList.filter(eachTodo => eachTodo.id !== todo.id)
 }
 
-const findTodo = (id) => {
+const getTodoById = (id) => {
     return todoList.find(eachTodo => eachTodo.id === id)
 }
 
 module.exports = {
     getTodoList,
     addNewTodo,
-    getTodosInProject,
+    getTodosByProject,
     deleteTodo,
-    findTodo,
+    getTodoById,
 }

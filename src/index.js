@@ -1,40 +1,14 @@
 const todos = require('./controllers/todos')
-const projects = require('./controllers/projects')
 require('./styles.css')
 const { compareAsc, format } = require('date-fns')
-
-todos.addNewTodo('Shopping for food',
-    new Date(2030, 5, 2),
-    projects.defaultProject,
-)
-
-todos.addNewTodo('Cinema',
-    new Date(2030, 5, 3),
-    projects.defaultProject,
-    "go for a date",
-    7
-)
-
-todos.addNewTodo('Dance class',
-    new Date(2030, 5, 9),
-    projects.defaultProject,
-    "Learning something new",
-    3
-)
-
-const newProject = projects.addNewProject('Weekend', 'must-do activities for this weekend')
-
-const todoList = todos.getTodoList()
-
-todoList[0].changeProject(newProject)
-todoList[1].changeProject(newProject)
+const helper = require('./utils/helper')
 
 const ulProjects = document.querySelector("#project-list")
 const ulTodos = document.querySelector("#todo-list")
 
-let targetProject = projects.getProjectByName('All')
+let targetProject = helper.defaultProject()
 
-projects.getProjectList().forEach(eachProject => {
+helper.getProjects().forEach(eachProject => {
     const newLi = document.createElement("li")
     const newAnchor = document.createElement('a')
     newAnchor.textContent = `${eachProject.title}`
@@ -44,10 +18,11 @@ projects.getProjectList().forEach(eachProject => {
 })
 
 const projectBtns = document.querySelectorAll('.project-nav')
+projectBtns[0].classList.add('project-selected')
 
 projectBtns.forEach(eachBtn => {
     eachBtn.addEventListener('click', () => {
-        targetProject = projects.getProjectByName(eachBtn.textContent)
+        targetProject = helper.getProjectByName(eachBtn.textContent)
         displayRelatedTodos(targetProject)
         const siblings = [...eachBtn.parentElement.parentElement.children]
         siblings.forEach(eachChild => {
@@ -81,7 +56,7 @@ function displayTargetTodo() {
 
                 eachBtn.classList.add('task-nav-expanded')
                 const id = eachBtn.getAttribute('id')
-                const todo = todos.findTodo(id)
+                const todo = helper.getTodoById(id)
                 const collapse = document.createElement('div')
                 collapse.classList.add('task-details')
 
@@ -89,7 +64,7 @@ function displayTargetTodo() {
                 titleProject.textContent = `Project:`
                 collapse.appendChild(titleProject)
                 const detailProject = document.createElement('p')
-                detailProject.textContent = todo.project.title
+                detailProject.textContent = todo.project?todo.project.title:''
                 collapse.appendChild(detailProject)
                 const titleDescription = document.createElement('p')
                 titleDescription.textContent = `Description:`
@@ -106,9 +81,19 @@ function displayTargetTodo() {
                 const titleChecklist = document.createElement('p')
                 titleChecklist.textContent = `Checklist:`
                 collapse.appendChild(titleChecklist)
+                if (todo.checklist) {
+                    const detailChecklist = document.createElement('ol')
+                    todo.checklist.forEach(eachItem => {
+                        const liItem = document.createElement('li')
+                        liItem.textContent = eachItem
+                        detailChecklist.appendChild(liItem)
+                    })
+                    collapse.appendChild(detailChecklist)
+                } else{
                 const detailChecklist = document.createElement('p')
-                detailChecklist.textContent = todo.checkList || '(none)'
+                detailChecklist.textContent = '(none)'
                 collapse.appendChild(detailChecklist)
+                }
 
                 eachBtn.parentElement.appendChild(collapse)
 
@@ -119,7 +104,7 @@ function displayTargetTodo() {
 
 function displayRelatedTodos(project) {
     ulTodos.replaceChildren()
-    todos.getTodosInProject(project).forEach(eachTodo => {
+    helper.getTodosByProject(project).forEach(eachTodo => {
         const newLi = document.createElement("li")
         const newBtn = document.createElement('div')
         const title = document.createElement('div')
