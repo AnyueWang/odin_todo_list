@@ -33,6 +33,14 @@ h1 {
 h2 {
     font-size: 30px;
     margin-top: 0;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 20px;
 }
 
 #content {

@@ -1,7 +1,7 @@
 const project = require('../models/project')
 
 const defaultTitle = 'Default'
-const defaultProject = project.createProject(defaultTitle)
+const defaultProject = project.createProject(defaultTitle, "All tasks are shown here.")
 const projectList = [defaultProject]
 
 const getProjectList = () => projectList

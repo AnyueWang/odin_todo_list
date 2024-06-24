@@ -4,6 +4,7 @@ const helper = require('./utils/helper')
 
 const ulProjects = document.querySelector("#project-list")
 const ulTodos = document.querySelector("#todo-list")
+const h3ProjectDescription = document.querySelector('#project-description')
 
 let targetProject = helper.defaultProject()
 
@@ -18,6 +19,7 @@ helper.getProjects().forEach(eachProject => {
 
 const projectBtns = document.querySelectorAll('.project-nav')
 projectBtns[0].classList.add('project-selected')
+h3ProjectDescription.textContent = targetProject.description
 
 projectBtns.forEach(eachBtn => {
     eachBtn.addEventListener('click', () => {
@@ -30,6 +32,7 @@ projectBtns.forEach(eachBtn => {
             }
         })
         eachBtn.classList.add('project-selected')
+        h3ProjectDescription.textContent = targetProject.description
     })
 })
 
