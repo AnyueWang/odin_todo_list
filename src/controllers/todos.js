@@ -14,6 +14,7 @@ const addNewTodo = (title, dueDate, project, description, priority, isDone, chec
 }
 
 const getTodosInProject = (project) => {
+    if (project.title === 'All') return todoList
     return todoList.filter(eachTodo => eachTodo.project.title === project.title)
 }
 
