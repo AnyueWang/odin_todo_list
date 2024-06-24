@@ -45,10 +45,17 @@ projects.getProjectList().forEach(eachProject => {
 
 const projectBtns = document.querySelectorAll('.project-nav')
 
-projectBtns.forEach(eachProject => {
-    eachProject.addEventListener('click', ()=>{
-        targetProject = projects.getProjectByName(eachProject.textContent)
+projectBtns.forEach(eachBtn => {
+    eachBtn.addEventListener('click', ()=>{
+        targetProject = projects.getProjectByName(eachBtn.textContent)
         displayRelatedTodos(targetProject)
+        const siblings = [...eachBtn.parentElement.parentElement.children]
+        siblings.forEach(eachChild => {
+            if (eachChild.firstChild.classList.contains('project-selected')) {
+                eachChild.firstChild.classList.remove('project-selected')
+            }
+        })
+        eachBtn.classList.add('project-selected')
     })
 })
 

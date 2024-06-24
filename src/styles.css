@@ -105,6 +105,11 @@ a {
     background-color: var(--expanded-background-color);
 }
 
+.project-selected {
+    color: var(--titles-color);
+    background-color: var(--expanded-background-color);
+}
+
 .task-details {
     padding-left: 10%;
     padding-right: 10%;
