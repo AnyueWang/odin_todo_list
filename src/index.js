@@ -1,4 +1,3 @@
-const todos = require('./controllers/todos')
 require('./styles.css')
 const { compareAsc, format } = require('date-fns')
 const helper = require('./utils/helper')

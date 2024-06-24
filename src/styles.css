@@ -124,6 +124,7 @@ a {
 .task-details p {
     color: var(--details-color);
     margin: 5px;
+    font-size: 12px;
 }
 
 .task-details ol {
