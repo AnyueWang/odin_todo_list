@@ -46,7 +46,7 @@ projects.getProjectList().forEach(eachProject => {
 const projectBtns = document.querySelectorAll('.project-nav')
 
 projectBtns.forEach(eachBtn => {
-    eachBtn.addEventListener('click', ()=>{
+    eachBtn.addEventListener('click', () => {
         targetProject = projects.getProjectByName(eachBtn.textContent)
         displayRelatedTodos(targetProject)
         const siblings = [...eachBtn.parentElement.parentElement.children]
@@ -71,6 +71,14 @@ function displayTargetTodo() {
                 const deletedDetails = eachBtn.nextElementSibling
                 deletedDetails.remove()
             } else {
+                const siblings = [...eachBtn.parentElement.parentElement.children]
+                siblings.forEach(eachChild => {
+                    if (eachChild.lastChild.classList.contains('task-details')) {
+                        eachChild.firstChild.classList.remove('task-nav-expanded')
+                        eachChild.lastChild.remove()
+                    }
+                })
+
                 eachBtn.classList.add('task-nav-expanded')
                 const id = eachBtn.getAttribute('id')
                 const todo = todos.findTodo(id)
@@ -103,6 +111,7 @@ function displayTargetTodo() {
                 collapse.appendChild(detailChecklist)
 
                 eachBtn.parentElement.appendChild(collapse)
+
             }
         })
     }, true)
