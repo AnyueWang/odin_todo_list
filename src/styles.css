@@ -185,11 +185,11 @@ input {
     box-sizing: border-box;
 }
 
-#new-title {
+#new-project-title {
     width: 60%;
 }
 
-#new-description {
+#new-project-description {
     width: 90%;
     height: 3lh;
     resize: vertical;
@@ -203,11 +203,19 @@ input {
     color: var(--titles-color);
 }
 
-.new-buttons {
+.new-project-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     padding-bottom: 5px;
+}
+
+.new-task-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
+    grid-column: 1 / -1;
 }
 
 .new-buttons button {

@@ -1,4 +1,4 @@
-const createTodo = (title, dueDate, project, description = '', priority = 0, isDone = false, checklist = []) => {
+const createTodo = (title, dueDate, project, description = '', priority = 1, isDone = false, checklist = []) => {
     const id = Math.floor(new Date().valueOf() * Math.random()).toString()
 
     const isOverdue = () => {
