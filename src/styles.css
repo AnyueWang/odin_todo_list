@@ -20,6 +20,8 @@
     --icon-hover-filter-color: invert(13%) sepia(96%) saturate(5204%) hue-rotate(358deg) brightness(110%) contrast(119%);
     --button-background-color: rgb(251, 109, 133);
     --warning-color: rgb(0, 123, 255);
+    --tooltip-color: rgb(0, 123, 255);
+    --tooltip-background-color: rgb(237, 250, 138);
 }
 
 body {
@@ -192,7 +194,8 @@ input {
     height: 3lh;
     resize: vertical;
     display: box;
-    border: 2px solid var(--titles-color);;
+    border: 2px solid var(--titles-color);
+    ;
 }
 
 .project-new .project-nav:hover {
@@ -226,4 +229,33 @@ input {
     margin-bottom: 5px;
     margin-top: 0;
     color: var(--warning-color);
+}
+
+.heading-new {
+    margin: 0;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: var(--tooltip-background-color);
+    color: var(--tooltip-color);
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: 10px;
+
+    position: absolute;
+    z-index: 1;
+    left: 100%;
+    top: 100%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

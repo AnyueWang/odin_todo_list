@@ -1,5 +1,7 @@
 const IconAddProject = require('../resources/icons/folder-plus.svg')
 const IconAddTodo = require('../resources/icons/file-plus.svg')
+const warnings = require('../page-components/warnings')
+const icons = require('../page-components/icons')
 
 const display = () => {
     const { compareAsc, format } = require('date-fns')
@@ -9,32 +11,29 @@ const display = () => {
     const ulTodos = document.querySelector("#todo-list")
     const h3ProjectDescription = document.querySelector('#project-description')
 
-    const iconAddProject = new Image()
-    iconAddProject.src = IconAddProject
-    iconAddProject.classList.add('icon')
-    document.querySelector('#project-title').appendChild(iconAddProject)
-
-    const iconAddTodo = new Image()
-    iconAddTodo.src = IconAddTodo
-    iconAddTodo.classList.add('icon')
-    document.querySelector('#todo-title').appendChild(iconAddTodo)
+    const iconAddProject = icons.addIcon(IconAddProject, 'project')
+    const iconAddTodo = icons.addIcon(IconAddTodo, 'todo')
 
     let targetProject = helper.defaultProject()
 
     iconAddProject.addEventListener('click', () => {
-        if (document.querySelector('.project-new')) {
+        if (document.querySelector('.project-new') || document.querySelector('.todo-new') ) {
             return false
         }
         const newLi = document.createElement('li')
         const newForm = document.createElement('form')
         newForm.classList.add('project-nav')
 
+        const heading = document.createElement('p')
+        heading.textContent = '🗃️ New project'
+        heading.classList.add('heading-new')
         const titleLabel = document.createElement('label')
         titleLabel.setAttribute('for', 'new-title')
         titleLabel.textContent = 'Name: '
         const titleInput = document.createElement('input')
         titleInput.setAttribute('id', 'new-title')
         titleInput.setAttribute('required', '')
+        newForm.append(heading)
         newForm.appendChild(titleLabel)
         newForm.appendChild(titleInput)
 
@@ -60,25 +59,36 @@ const display = () => {
 
         newLi.appendChild(newForm)
         newLi.classList.add('project-new')
-        ulProjects.appendChild(newLi)
+        ulProjects.prepend(newLi)
 
         addBtn.addEventListener('click', (event) => {
             event.preventDefault()
             const title = document.querySelector('#new-title').value
             const description = document.querySelector('#new-description').value
             if (helper.isTitleExist(title)) {
-                const warning = document.createElement('p')
-                warning.textContent = '* The name already exists!'
-                warning.classList.add('warning')
-                console.log(warning)
-                btnContainer.insertAdjacentElement('beforebegin', warning)
-                setTimeout(() => warning.remove(), 5000)
-            } else {
+                warnings.addWarningBefore(btnContainer,'Project name already exists!')
+                return
+            } 
+            if (title === '') {
+                warnings.addWarningBefore(btnContainer,'Project name should not be empty!')
+                return
+            }
                 helper.addNewProject(title, description)
                 document.querySelector('.project-new').remove()
                 displayProjects()
-            }
         })
+
+        cancelBtn.addEventListener('click', (event) => {
+            event.preventDefault()
+            document.querySelector('.project-new').remove()
+        })
+    })
+
+    iconAddTodo.addEventListener('click', () => {
+        if (document.querySelector('.project-new') || document.querySelector('.todo-new') ) {
+            return false
+        }
+
 
     })
 
