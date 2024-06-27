@@ -17,6 +17,9 @@
     --details-color: rgb(200, 51, 226);
     --details-background-color: rgb(206, 244, 218);
     --icon-filter-color: invert(8%) sepia(78%) saturate(6457%) hue-rotate(296deg) brightness(99%) contrast(106%);
+    --icon-hover-filter-color: invert(13%) sepia(96%) saturate(5204%) hue-rotate(358deg) brightness(110%) contrast(119%);
+    --button-background-color: rgb(251, 109, 133);
+
 }
 
 body {
@@ -29,6 +32,7 @@ body {
 
 h1 {
     font-size: 50px;
+    width: 1100px;
 }
 
 h2 {
@@ -69,10 +73,12 @@ a {
 
 #project {
     width: 30%;
+    min-width: 250px;
 }
 
 #todo {
     width: 70%;
+    min-width: 700px;
 }
 
 .project-nav {
@@ -89,6 +95,18 @@ a {
 .project-nav:hover {
     color: var(--hover-color);
     background-color: var(--hover-background-color);
+}
+
+label {
+    color: var(--titles-color);
+    align-self: self-start;
+}
+
+input {
+    border: 2px solid var(--titles-color);
+    text-align: left;
+    align-self: self-start;
+    width: 120px;
 }
 
 .task-nav {
@@ -149,8 +167,56 @@ a {
     width: 30px;
 }
 
+.icon:hover {
+    filter: var(--icon-hover-filter-color);
+}
+
 .title {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.project-new form {
+    text-align: left;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+#new-title {
+    width: 60%;
+}
+
+#new-description {
+    width: 90%;
+    height: 3lh;
+    resize: vertical;
+    display: box;
+    border: 2px solid var(--titles-color);;
+}
+
+.project-new .project-nav:hover {
+    background-color: var(--list-background-color);
+    color: var(--titles-color);
+}
+
+.new-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
+}
+
+.new-buttons button {
+    border: 0;
+    background-color: var(--button-background-color);
+    color: var(--titles-color);
+    font-size: 16px;
+    font-family: var(--font-family);
+    border-radius: 8px;
+}
+
+.new-buttons button:hover {
+    color: var(--hover-color);
+    background-color: var(--hover-background-color);
 }
