@@ -1,10 +1,22 @@
 require('./styles.css')
 const { compareAsc, format } = require('date-fns')
 const helper = require('./utils/helper')
+import IconAddProject from './resources/icons/folder-plus.svg'
+import IconAddTodo from './resources/icons/file-plus.svg'
 
 const ulProjects = document.querySelector("#project-list")
 const ulTodos = document.querySelector("#todo-list")
 const h3ProjectDescription = document.querySelector('#project-description')
+
+const iconAddProject = new Image()
+iconAddProject.src = IconAddProject
+iconAddProject.classList.add('icon')
+document.querySelector('#project-title').appendChild(iconAddProject)
+
+const iconAddTodo = new Image()
+iconAddTodo.src = IconAddTodo
+iconAddTodo.classList.add('icon')
+document.querySelector('#todo-title').appendChild(iconAddTodo)
 
 let targetProject = helper.defaultProject()
 

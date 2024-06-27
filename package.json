@@ -21,7 +21,10 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "date-fns": "^3.6.0",
-    "lodash": "^4.17.21"
+    "file-loader": "^6.2.0",
+    "lodash": "^4.17.21",
+    "url-loader": "^4.1.1"
   }
 }

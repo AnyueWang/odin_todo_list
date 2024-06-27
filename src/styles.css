@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'MyFont';
-    src: url('./resources/my-font.ttf') format('truetype');
+    src: url('./resources/fonts/my-font.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
 }
@@ -16,11 +16,12 @@
     --expanded-background-color: rgb(175, 238, 196);
     --details-color: rgb(200, 51, 226);
     --details-background-color: rgb(206, 244, 218);
+    --icon-filter-color: invert(8%) sepia(78%) saturate(6457%) hue-rotate(296deg) brightness(99%) contrast(106%);
 }
 
 body {
     background-color: var(--backgound-color);
-    padding: 10px 50px;
+    padding: 10px 100px;
     font-family: var(--font-family);
     color: var(--heading-color);
     margin: 0;
@@ -141,4 +142,15 @@ a {
     margin: 5px;
     padding: 0;
     padding-left: 20px;
+}
+
+.icon {
+    filter: var(--icon-filter-color);
+    width: 30px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
