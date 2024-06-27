@@ -24,7 +24,7 @@ const todos = [
     },
     {
         "title": "Dance class",
-        "date": "09-05-2030",
+        "date": "09-04-2030",
         "project": "Weekend plans",
         "description": "Learning something new",
         "priority": 4

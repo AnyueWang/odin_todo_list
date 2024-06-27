@@ -66,7 +66,7 @@ function displayTargetTodo() {
                 titleProject.textContent = `Project:`
                 collapse.appendChild(titleProject)
                 const detailProject = document.createElement('p')
-                detailProject.textContent = todo.project?todo.project.title:''
+                detailProject.textContent = todo.project ? todo.project.title : ''
                 collapse.appendChild(detailProject)
                 const titleDescription = document.createElement('p')
                 titleDescription.textContent = `Description:`
@@ -91,10 +91,10 @@ function displayTargetTodo() {
                         detailChecklist.appendChild(liItem)
                     })
                     collapse.appendChild(detailChecklist)
-                } else{
-                const detailChecklist = document.createElement('p')
-                detailChecklist.textContent = '(none)'
-                collapse.appendChild(detailChecklist)
+                } else {
+                    const detailChecklist = document.createElement('p')
+                    detailChecklist.textContent = '(none)'
+                    collapse.appendChild(detailChecklist)
                 }
 
                 eachBtn.parentElement.appendChild(collapse)
@@ -106,7 +106,9 @@ function displayTargetTodo() {
 
 function displayRelatedTodos(project) {
     ulTodos.replaceChildren()
-    helper.getTodosByProject(project).forEach(eachTodo => {
+    const todos = helper.getTodosByProject(project)
+    const todosOrderedByTime = todos.sort((a, b) => compareAsc(a.dueDate, b.dueDate))
+    todosOrderedByTime.forEach(eachTodo => {
         const newLi = document.createElement("li")
         const newBtn = document.createElement('div')
         const title = document.createElement('div')
