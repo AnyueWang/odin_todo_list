@@ -10,12 +10,14 @@ const getProjectByName = (name) => {
         return each.title === name
     })
 }
+const isTitleExist = (title) => {
+    return projectList.map(eachProject => eachProject.title).includes(title)
+}
 
 const addProject = (project) => projectList.push(project)
 
 const addNewProject = (title, description) => {
-    const titles = projectList.map(eachProject => eachProject.title)
-    if (titles.includes(title)) return false
+    if (isTitleExist(title)) return false
     const newProject = project.createProject(title, description)
     addProject(newProject)
     return newProject
@@ -33,4 +35,7 @@ module.exports = {
     addNewProject,
     deleteProject,
     getProjectByName,
+    isTitleExist,
 }
+
+

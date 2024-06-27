@@ -21,7 +21,7 @@ const display = () => {
 
     let targetProject = helper.defaultProject()
 
-    iconAddProject.addEventListener('click', ()=>{
+    iconAddProject.addEventListener('click', () => {
         if (document.querySelector('.project-new')) {
             return false
         }
@@ -62,37 +62,60 @@ const display = () => {
         newLi.classList.add('project-new')
         ulProjects.appendChild(newLi)
 
-    })
-
-    helper.getProjects().forEach(eachProject => {
-        const newLi = document.createElement("li")
-        const newAnchor = document.createElement('a')
-        newAnchor.textContent = `${eachProject.title}`
-        newAnchor.classList.add('project-nav')
-        newLi.appendChild(newAnchor)
-        ulProjects.appendChild(newLi)
-    })
-
-    const projectBtns = document.querySelectorAll('.project-nav')
-    projectBtns[0].classList.add('project-selected')
-    h3ProjectDescription.textContent = targetProject.description
-
-    projectBtns.forEach(eachBtn => {
-        eachBtn.addEventListener('click', () => {
-            targetProject = helper.getProjectByName(eachBtn.textContent)
-            displayRelatedTodos(targetProject)
-            const siblings = [...eachBtn.parentElement.parentElement.children]
-            siblings.forEach(eachChild => {
-                if (eachChild.firstChild.classList.contains('project-selected')) {
-                    eachChild.firstChild.classList.remove('project-selected')
-                }
-            })
-            eachBtn.classList.add('project-selected')
-            h3ProjectDescription.textContent = targetProject.description
+        addBtn.addEventListener('click', (event) => {
+            event.preventDefault()
+            const title = document.querySelector('#new-title').value
+            const description = document.querySelector('#new-description').value
+            if (helper.isTitleExist(title)) {
+                const warning = document.createElement('p')
+                warning.textContent = '* The name already exists!'
+                warning.classList.add('warning')
+                console.log(warning)
+                btnContainer.insertAdjacentElement('beforebegin', warning)
+                setTimeout(() => warning.remove(), 5000)
+            } else {
+                helper.addNewProject(title, description)
+                document.querySelector('.project-new').remove()
+                displayProjects()
+            }
         })
+
     })
+
+    displayProjects()
 
     displayRelatedTodos(targetProject)
+
+    function displayProjects() {
+        ulProjects.replaceChildren()
+        helper.getProjects().forEach(eachProject => {
+            const newLi = document.createElement("li")
+            const newAnchor = document.createElement('a')
+            newAnchor.textContent = `${eachProject.title}`
+            newAnchor.classList.add('project-nav')
+            newLi.appendChild(newAnchor)
+            ulProjects.appendChild(newLi)
+        })
+
+        const projectBtns = document.querySelectorAll('.project-nav')
+        projectBtns[0].classList.add('project-selected')
+        h3ProjectDescription.textContent = targetProject.description
+
+        projectBtns.forEach(eachBtn => {
+            eachBtn.addEventListener('click', () => {
+                targetProject = helper.getProjectByName(eachBtn.textContent)
+                displayRelatedTodos(targetProject)
+                const siblings = [...eachBtn.parentElement.parentElement.children]
+                siblings.forEach(eachChild => {
+                    if (eachChild.firstChild.classList.contains('project-selected')) {
+                        eachChild.firstChild.classList.remove('project-selected')
+                    }
+                })
+                eachBtn.classList.add('project-selected')
+                h3ProjectDescription.textContent = targetProject.description
+            })
+        })
+    }
 
     function displayTargetTodo() {
         const todoBtns = document.querySelectorAll('.task-nav')

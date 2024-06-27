@@ -19,7 +19,7 @@
     --icon-filter-color: invert(8%) sepia(78%) saturate(6457%) hue-rotate(296deg) brightness(99%) contrast(106%);
     --icon-hover-filter-color: invert(13%) sepia(96%) saturate(5204%) hue-rotate(358deg) brightness(110%) contrast(119%);
     --button-background-color: rgb(251, 109, 133);
-
+    --warning-color: rgb(0, 123, 255);
 }
 
 body {
@@ -219,4 +219,11 @@ input {
 .new-buttons button:hover {
     color: var(--hover-color);
     background-color: var(--hover-background-color);
+}
+
+.warning {
+    font-size: 10px;
+    margin-bottom: 5px;
+    margin-top: 0;
+    color: var(--warning-color);
 }

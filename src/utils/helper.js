@@ -25,6 +25,8 @@ const defaultProject = () => projects.defaultProject
 const getProjectByName = name => projects.getProjectByName(name)
 const getTodoById = id => todos.getTodoById(id)
 const getTodosByProject = project => todos.getTodosByProject(project)
+const addNewProject = (title, description) => projects.addNewProject(title, description)
+const isTitleExist = title => projects.isTitleExist(title)
 
 module.exports = {
     getProjects,
@@ -33,5 +35,7 @@ module.exports = {
     getProjectByName,
     getTodoById,
     getTodosByProject,
+    addNewProject,
+    isTitleExist
 }
 
