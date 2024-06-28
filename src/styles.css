@@ -189,7 +189,7 @@ input {
     width: 60%;
 }
 
-#new-project-description {
+#new-project-description, #new-task-description {
     width: 90%;
     height: 3lh;
     resize: vertical;
@@ -233,11 +233,15 @@ input {
 }
 
 .warning {
-    font-size: 10px;
+    font-size: 10px !important;
     margin-bottom: 5px;
     margin-top: 0;
-    color: var(--warning-color);
+    color: var(--warning-color) !important;
 }
+
+.task-details .warning {
+    grid-column: 1/-1 !important;
+} 
 
 .heading-new {
     margin: 0;

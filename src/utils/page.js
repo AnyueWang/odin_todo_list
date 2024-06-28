@@ -122,6 +122,7 @@ const display = () => {
         const dueDateInput = document.createElement('input')
         dueDateInput.setAttribute('id', 'new-task-duedate')
         dueDateInput.setAttribute('type', 'date')
+        dueDateInput.setAttribute('value', '2020-01-01')
         newDetailsForm.append(dueDateLabel)
         newDetailsForm.append(dueDateInput)
 
@@ -192,6 +193,35 @@ const display = () => {
         newLi.classList.add('task-new')
         newLi.appendChild(newDetailsForm)
         ulTodos.prepend(newLi)
+
+        addBtn.addEventListener('click', (event) => {
+            event.preventDefault()
+            const title = document.querySelector('#new-task-title').value
+            const dueDate = document.querySelector('#new-task-duedate').value
+            const dueDateSplits = dueDate.split('-')
+            const project = document.querySelector('#new-task-project').value
+            const description = document.querySelector('#new-task-description').value
+            const priority = document.querySelector('#new-task-priority').value
+            const checklist = document.querySelector('#new-task-checklist').value
+            if (title === '') {
+                warnings.addWarningBefore(btnContainer, 'Task name should not be empty!')
+                return
+            }
+            helper.addNewTodo(
+                title,
+                new Date(dueDateSplits[0], dueDateSplits[1] - 1, dueDateSplits[2]),
+                helper.getProjectByName(project || 'Default'),
+                description,
+                Number(priority.split(' ')[0]) || 1,
+                checklist
+            )
+            displayRelatedTodos(targetProject)
+        })
+
+        cancelBtn.addEventListener('click', (event) => {
+            event.preventDefault()
+            document.querySelector('.task-new').remove()
+        })
     })
 
     displayProjects()
@@ -215,6 +245,9 @@ const display = () => {
 
         projectBtns.forEach(eachBtn => {
             eachBtn.addEventListener('click', () => {
+                if (document.querySelector('.project-new') || document.querySelector('.task-new')) {
+                    return
+                }
                 targetProject = helper.getProjectByName(eachBtn.textContent)
                 displayRelatedTodos(targetProject)
                 const siblings = [...eachBtn.parentElement.parentElement.children]
@@ -234,7 +267,7 @@ const display = () => {
 
         todoBtns.forEach(eachBtn => {
             eachBtn.addEventListener('click', () => {
-                if (document.querySelector('.task-new')) {
+                if (document.querySelector('.project-new') || document.querySelector('.task-new')) {
                     return
                 }
                 resettings.closeExpandedTask()
@@ -312,10 +345,8 @@ const display = () => {
             newLi.appendChild(newBtn)
             ulTodos.appendChild(newLi)
         })
-
         displayTargetTodo()
     }
-
 }
 
 module.exports = {

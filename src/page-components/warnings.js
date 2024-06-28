@@ -3,7 +3,7 @@ const addWarningBefore = (container, message) => {
     if (warnedMessage) {
         warnedMessage.remove()
     }
-    const warning = document.createElement('p')
+    const warning = document.createElement('div')
     warning.textContent = `* ${message}`
     warning.classList.add('warning')
     container.insertAdjacentElement('beforebegin', warning)
