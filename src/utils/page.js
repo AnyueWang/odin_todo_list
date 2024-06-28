@@ -372,6 +372,12 @@ const display = () => {
                 helper.deleteTodo(deletedTodo)
                 document.getElementById(id).parentElement.remove()
             })
+
+            iconStatus.addEventListener('click', (event) => {
+                event.stopPropagation()
+                eachTodo.toggleDone()
+                displayRelatedTodos(targetProject)
+            })
         })
         displayTargetTodo()
     }

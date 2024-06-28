@@ -23,11 +23,11 @@
     --tooltip-color: rgb(0, 123, 255);
     --tooltip-background-color: rgb(237, 250, 138);
     --done-titles-color: white;
-    --done-list-background-color: gray;
+    --done-list-background-color: rgb(165, 165, 165);
     --done-hover-titles-color: white;
     --done-hover-list-background-color: lightgray;
     --expanded-done-background-color: gray;
-    --details-done-background-color: rgb(165, 165, 165);
+    --details-done-background-color: lightgray;
     --details-done-color: white;
 }
 
@@ -154,7 +154,7 @@ input {
 
 .task-done-nav-expanded {
     color: var(--done-titles-color);
-    background-color: var(--done-list-background-color);
+    background-color: var(--expanded-done-background-color);
 }
 
 .project-selected {

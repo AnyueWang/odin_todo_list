@@ -8,6 +8,10 @@ const createTodo = (title, dueDate, project, description = '', priority = 1, isD
         this.project = newProject
     }
 
+    const toggleDone = function () {
+        this.isDone = !this.isDone
+    }
+
     return {
         id,
         title,
@@ -20,6 +24,7 @@ const createTodo = (title, dueDate, project, description = '', priority = 1, isD
 
         isOverdue,
         changeProject,
+        toggleDone,
 
     }
 }
