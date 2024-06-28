@@ -274,14 +274,14 @@ const display = () => {
                 if (document.querySelector('.project-new') || document.querySelector('.task-new')) {
                     return
                 }
+
+                if (eachBtn.classList.contains('task-nav-expanded')) {
+                    eachBtn.classList.remove('task-nav-expanded')
+                    eachBtn.nextSibling.remove()
+                    return
+                }
+
                 resettings.closeExpandedTask()
-                const siblings = [...eachBtn.parentElement.parentElement.children]
-                siblings.forEach(eachChild => {
-                    if (eachChild.lastChild.classList.contains('task-details')) {
-                        eachChild.firstChild.classList.remove('task-nav-expanded')
-                        eachChild.lastChild.remove()
-                    }
-                })
 
                 eachBtn.classList.add('task-nav-expanded')
                 const id = eachBtn.getAttribute('id')
@@ -352,7 +352,7 @@ const display = () => {
             newLi.appendChild(newBtn)
             ulTodos.appendChild(newLi)
 
-            iconDelete.addEventListener('click', (event)=>{
+            iconDelete.addEventListener('click', (event) => {
                 event.stopPropagation()
                 const id = event.target.parentElement.parentElement.parentElement.id
                 const deletedTodo = helper.getTodoById(id)
