@@ -22,6 +22,13 @@
     --warning-color: rgb(0, 123, 255);
     --tooltip-color: rgb(0, 123, 255);
     --tooltip-background-color: rgb(237, 250, 138);
+    --done-titles-color: white;
+    --done-list-background-color: gray;
+    --done-hover-titles-color: white;
+    --done-hover-list-background-color: lightgray;
+    --expanded-done-background-color: gray;
+    --details-done-background-color: rgb(165, 165, 165);
+    --details-done-color: white;
 }
 
 body {
@@ -125,9 +132,19 @@ input {
     padding-right: 10px;
 }
 
+.task-done-nav {
+    color: var(--done-titles-color);
+    background-color: var(--done-list-background-color);
+}
+
 .task-nav:hover {
     color: var(--hover-color);
     background-color: var(--hover-background-color);
+}
+
+.task-done-nav:hover {
+    color: var(--done-hover-titles-color);
+    background-color: var(--done-hover-list-background-color);
 }
 
 .task-nav-expanded {
@@ -135,19 +152,31 @@ input {
     background-color: var(--expanded-background-color);
 }
 
+.task-done-nav-expanded {
+    color: var(--done-titles-color);
+    background-color: var(--done-list-background-color);
+}
+
 .project-selected {
     color: var(--titles-color);
     background-color: var(--expanded-background-color);
 }
 
-.task-details {
+.task-details, .task-done-details {
     padding-left: 10%;
     padding-right: 10%;
     display: grid;
     grid-template-columns: 1fr 3fr;
-    background-color: var(--details-background-color);
     margin-top: 5px;
     width: 80%;
+}
+
+.task-details {
+    background-color: var(--details-background-color);
+}
+
+.task-done-details {
+    background-color: var(--details-done-background-color);
 }
 
 .task-details p {
@@ -158,6 +187,20 @@ input {
 
 .task-details ol {
     color: var(--details-color);
+    font-size: 16px;
+    margin: 5px;
+    padding: 0;
+    padding-left: 20px;
+}
+
+.task-done-details p {
+    color: var(--details-done-color);
+    margin: 5px;
+    font-size: 16px;
+}
+
+.task-done-details ol {
+    color: var(--details-done-color);
     font-size: 16px;
     margin: 5px;
     padding: 0;

@@ -276,19 +276,27 @@ const display = () => {
                 if (document.querySelector('.project-new') || document.querySelector('.task-new')) {
                     return
                 }
-                if (eachBtn.classList.contains('task-nav-expanded')) {
+                if (eachBtn.classList.contains('task-nav-expanded') || eachBtn.classList.contains('task-done-nav-expanded')) {
+                    console.log(eachBtn)
                     eachBtn.classList.remove('task-nav-expanded')
+                    eachBtn.classList.remove('task-done-nav-expanded')
                     eachBtn.nextSibling.remove()
                     return
                 }
 
                 resettings.closeExpandedTask()
 
-                eachBtn.classList.add('task-nav-expanded')
                 const id = eachBtn.getAttribute('id')
                 const todo = helper.getTodoById(id)
                 const collapse = document.createElement('div')
-                collapse.classList.add('task-details')
+
+                if (todo.isDone) {
+                    eachBtn.classList.add('task-done-nav-expanded')
+                    collapse.classList.add('task-done-details')
+                } else {
+                    eachBtn.classList.add('task-nav-expanded')
+                    collapse.classList.add('task-details')
+                }
 
                 const titleProject = document.createElement('p')
                 titleProject.textContent = `Project:`
@@ -340,7 +348,10 @@ const display = () => {
             const title = document.createElement('div')
             const date = document.createElement('div')
             const StatusIcon = eachTodo.isDone ? IconDone : IconUndone
-            const statusTip =  eachTodo.isDone ? 'The task is done. Press to set undone.' : 'The task is undone. Press to set done.'
+            const statusTip = eachTodo.isDone ? 'The task is done. Press to set undone.' : 'The task is undone. Press to set done.'
+            if (eachTodo.isDone) {
+                newBtn.classList.add('task-done-nav')
+            }
             const iconStatus = icons.addIcon(StatusIcon, title, statusTip)
             const iconDelete = icons.addIcon(IconDelete, title, 'Delete the task.')
             const titleContent = document.createElement('p')
