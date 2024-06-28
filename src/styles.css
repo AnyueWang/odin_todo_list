@@ -271,3 +271,18 @@ input {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+.task-nav > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-nav .icon {
+    width: 20px;
+    padding-top: 3px;
+}
+
+.task-nav p {
+    margin: 0;
+}

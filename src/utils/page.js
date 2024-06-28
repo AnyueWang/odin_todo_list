@@ -1,5 +1,7 @@
 const IconAddProject = require('../resources/icons/folder-plus.svg')
 const IconAddTodo = require('../resources/icons/file-plus.svg')
+const IconDelete = require('../resources/icons/delete.svg')
+
 const warnings = require('../page-components/warnings')
 const icons = require('../page-components/icons')
 const resettings = require('../page-actions/resettings')
@@ -19,9 +21,11 @@ const display = () => {
     const ulProjects = document.querySelector("#project-list")
     const ulTodos = document.querySelector("#todo-list")
     const h3ProjectDescription = document.querySelector('#project-description')
+    const projectTitle = document.querySelector(`#project-title`)
+    const taskTitle = document.querySelector(`#task-title`)
 
-    const iconAddProject = icons.addIcon(IconAddProject, 'project')
-    const iconAddTodo = icons.addIcon(IconAddTodo, 'task')
+    const iconAddProject = icons.addIcon(IconAddProject, projectTitle, 'Create a new project.')
+    const iconAddTodo = icons.addIcon(IconAddTodo, taskTitle, 'Create a new task')
 
     let targetProject = helper.defaultProject()
 
@@ -336,7 +340,10 @@ const display = () => {
             const newBtn = document.createElement('div')
             const title = document.createElement('div')
             const date = document.createElement('div')
-            title.textContent = eachTodo.title
+            const iconDelete = icons.addIcon(IconDelete, title, 'Delete the task.')
+            const titleContent = document.createElement('p')
+            titleContent.textContent = eachTodo.title
+            title.appendChild(titleContent)
             date.textContent = format(eachTodo.dueDate, 'dd-MMM-yyyy')
             newBtn.appendChild(title)
             newBtn.appendChild(date)
@@ -344,6 +351,14 @@ const display = () => {
             newBtn.setAttribute("id", `${eachTodo.id}`)
             newLi.appendChild(newBtn)
             ulTodos.appendChild(newLi)
+
+            iconDelete.addEventListener('click', (event)=>{
+                event.stopPropagation()
+                const id = event.target.parentElement.parentElement.parentElement.id
+                const deletedTodo = helper.getTodoById(id)
+                helper.deleteTodo(deletedTodo)
+                document.getElementById(id).parentElement.remove()
+            })
         })
         displayTargetTodo()
     }
