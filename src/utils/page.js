@@ -1,6 +1,8 @@
 const IconAddProject = require('../resources/icons/folder-plus.svg')
 const IconAddTodo = require('../resources/icons/file-plus.svg')
 const IconDelete = require('../resources/icons/delete.svg')
+const IconUndone = require('../resources/icons/undone.svg')
+const IconDone = require('../resources/icons/done.svg')
 
 const warnings = require('../page-components/warnings')
 const icons = require('../page-components/icons')
@@ -274,7 +276,6 @@ const display = () => {
                 if (document.querySelector('.project-new') || document.querySelector('.task-new')) {
                     return
                 }
-
                 if (eachBtn.classList.contains('task-nav-expanded')) {
                     eachBtn.classList.remove('task-nav-expanded')
                     eachBtn.nextSibling.remove()
@@ -323,9 +324,7 @@ const display = () => {
                     detailChecklist.textContent = '(none)'
                     collapse.appendChild(detailChecklist)
                 }
-
                 eachBtn.parentElement.appendChild(collapse)
-
 
             })
         }, true)
@@ -340,6 +339,9 @@ const display = () => {
             const newBtn = document.createElement('div')
             const title = document.createElement('div')
             const date = document.createElement('div')
+            const StatusIcon = eachTodo.isDone ? IconDone : IconUndone
+            const statusTip =  eachTodo.isDone ? 'The task is done. Press to set undone.' : 'The task is undone. Press to set done.'
+            const iconStatus = icons.addIcon(StatusIcon, title, statusTip)
             const iconDelete = icons.addIcon(IconDelete, title, 'Delete the task.')
             const titleContent = document.createElement('p')
             titleContent.textContent = eachTodo.title
