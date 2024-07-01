@@ -3,7 +3,6 @@ const icons = require('../page-components/icons')
 const resettings = require('../page-actions/resettings')
 const { compareAsc, format } = require('date-fns')
 const helper = require('../utils/helper')
-const { update } = require('lodash')
 const { defaultProject } = require('../controllers/projects')
 const ulProjects = document.querySelector("#project-list")
 const ulTodos = document.querySelector("#todo-list")
@@ -94,6 +93,9 @@ const display = () => {
     })
 
     iconAddTodo.addEventListener('click', () => {
+        if (isEditing()) {
+            return
+        }
         editTaskInfo()
 
         const addBtn = document.querySelector('.add-btn')
@@ -280,6 +282,9 @@ const display = () => {
 
             iconEdit.addEventListener('click', event => {
                 event.stopPropagation()
+                if (isEditing()) {
+                    return
+                }
                 const id = event.target.closest('.task-nav').id
                 const updatedTodo = helper.getTodoById(id)
                 editTaskInfo(id)
@@ -339,9 +344,6 @@ function isEditing() {
 }
 
 const editTaskInfo = (id = undefined) => {
-    if (isEditing()) {
-        return
-    }
 
     resettings.closeExpandedTask()
 
@@ -366,20 +368,17 @@ const editTaskInfo = (id = undefined) => {
 
     const projectLabel = document.createElement('label')
     projectLabel.setAttribute('for', 'new-task-project')
-    projectLabel.textContent = 'Porject: '
-    const projectInput = document.createElement('input')
+    projectLabel.textContent = 'Project: '
+    const projectInput = document.createElement('select')
     projectInput.setAttribute('id', 'new-task-project')
-    projectInput.setAttribute('list', 'available-projects')
-    const projectList = document.createElement('datalist')
-    projectList.setAttribute('id', 'available-projects')
     helper.getProjects().forEach(project => {
         const option = document.createElement('option')
+        option.textContent = project.title
         option.setAttribute('value', project.title)
-        projectList.append(option)
+        projectInput.append(option)
     })
     newDetailsForm.append(projectLabel)
     newDetailsForm.append(projectInput)
-    newDetailsForm.append(projectList)
 
     const descriptionLabel = document.createElement('label')
     descriptionLabel.setAttribute('for', 'new-task-description')
@@ -392,17 +391,14 @@ const editTaskInfo = (id = undefined) => {
     const priorityLabel = document.createElement('label')
     priorityLabel.setAttribute('for', 'new-task-priority')
     priorityLabel.textContent = 'Priority: '
-    const priorityInput = document.createElement('input')
+    const priorityInput = document.createElement('select')
     priorityInput.setAttribute('id', 'new-task-priority')
-    priorityInput.setAttribute('list', 'priorities')
-    const priorityList = document.createElement('datalist')
-    priorityList.setAttribute('id', 'priorities')
     Object.keys(priorities).forEach(key => {
         const option = document.createElement('option')
-        option.setAttribute('value', `${key} (${priorities[key]})`)
-        priorityList.append(option)
+        option.textContent = `${key} (${priorities[key]})`
+        option.setAttribute('value', key)
+        priorityInput.append(option)
     })
-    newDetailsForm.append(priorityList)
     newDetailsForm.append(priorityLabel)
     newDetailsForm.append(priorityInput)
 
@@ -457,8 +453,6 @@ const editTaskInfo = (id = undefined) => {
         targetLi.classList.add('task-new')
         targetLi.appendChild(newDetailsForm)
 
-        console.log(helper.getTodos())
-
         const targetTodo = helper.getTodoById(id)
         titleInput.value = targetTodo.title
         const dueDate = targetTodo.dueDate
@@ -467,7 +461,7 @@ const editTaskInfo = (id = undefined) => {
         dueDateInput.value = `${dueDate.getFullYear()}-${month}-${date}`
         projectInput.value = targetTodo.project.title
         descriptionInput.value = targetTodo.description
-        priorityInput.value = `${targetTodo.priority} (${priorities[targetTodo.priority]})`
+        priorityInput.value = targetTodo.priority
         checklistInput.value = targetTodo.checklist
     }
 }
