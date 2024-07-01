@@ -1,5 +1,11 @@
 const tooltips = require('./tooltips')
 
+const IconAddProject = require('../resources/icons/folder-plus.svg')
+const IconAddTodo = require('../resources/icons/file-plus.svg')
+const IconDelete = require('../resources/icons/delete.svg')
+const IconUndone = require('../resources/icons/undone.svg')
+const IconDone = require('../resources/icons/done.svg')
+
 const addIcon = (Icon, parentDiv, explanation) => {
     const div = document.createElement('div')
     const icon = new Image()
@@ -12,5 +18,11 @@ const addIcon = (Icon, parentDiv, explanation) => {
 }
 
 module.exports = {
+    IconAddProject,
+    IconAddTodo,
+    IconDelete,
+    IconUndone,
+    IconDone,
+
     addIcon
 }

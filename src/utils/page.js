@@ -1,9 +1,3 @@
-const IconAddProject = require('../resources/icons/folder-plus.svg')
-const IconAddTodo = require('../resources/icons/file-plus.svg')
-const IconDelete = require('../resources/icons/delete.svg')
-const IconUndone = require('../resources/icons/undone.svg')
-const IconDone = require('../resources/icons/done.svg')
-
 const warnings = require('../page-components/warnings')
 const icons = require('../page-components/icons')
 const resettings = require('../page-actions/resettings')
@@ -26,8 +20,8 @@ const display = () => {
     const projectTitle = document.querySelector(`#project-title`)
     const taskTitle = document.querySelector(`#task-title`)
 
-    const iconAddProject = icons.addIcon(IconAddProject, projectTitle, 'Create a new project.')
-    const iconAddTodo = icons.addIcon(IconAddTodo, taskTitle, 'Create a new task')
+    const iconAddProject = icons.addIcon(icons.IconAddProject, projectTitle, 'Create a new project.')
+    const iconAddTodo = icons.addIcon(icons.IconAddTodo, taskTitle, 'Create a new task')
 
     let targetProject = helper.defaultProject()
 
@@ -354,13 +348,13 @@ const display = () => {
             const newBtn = document.createElement('div')
             const title = document.createElement('div')
             const date = document.createElement('div')
-            const StatusIcon = eachTodo.isDone ? IconDone : IconUndone
+            const StatusIcon = eachTodo.isDone ? icons.IconDone : icons.IconUndone
             const statusTip = eachTodo.isDone ? 'The task is done. Press to set undone.' : 'The task is undone. Press to set done.'
             if (eachTodo.isDone) {
                 newBtn.classList.add('task-done-nav')
             }
             const iconStatus = icons.addIcon(StatusIcon, title, statusTip)
-            const iconDelete = icons.addIcon(IconDelete, title, 'Delete the task.')
+            const iconDelete = icons.addIcon(icons.IconDelete, title, 'Delete the task.')
             const titleContent = document.createElement('p')
             titleContent.textContent = eachTodo.title
             title.appendChild(titleContent)
