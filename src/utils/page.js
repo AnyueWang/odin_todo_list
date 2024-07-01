@@ -341,7 +341,14 @@ const display = () => {
     function displayRelatedTodos(project) {
         ulTodos.replaceChildren()
         const todos = helper.getTodosByProject(project)
-        const todosOrderedByTime = todos.sort((a, b) => compareAsc(a.dueDate, b.dueDate))
+        const todosOrderedByTime = todos.sort((a, b) => {
+            if (a.isDone !== b.isDone) {
+                return a.isDone - b.isDone
+            } else {
+                return compareAsc(a.dueDate, b.dueDate)
+            }
+        })
+        console.log(todosOrderedByTime)
         todosOrderedByTime.forEach(eachTodo => {
             const newLi = document.createElement("li")
             const newBtn = document.createElement('div')
