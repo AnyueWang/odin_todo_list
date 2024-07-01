@@ -8,7 +8,7 @@ const getProjectList = () => projectList
 const getProjectByName = (name) => {
     return projectList.find(each => {
         return each.title === name
-    })
+    }) || defaultProject
 }
 const isTitleExist = (title) => {
     return projectList.map(eachProject => eachProject.title).includes(title)

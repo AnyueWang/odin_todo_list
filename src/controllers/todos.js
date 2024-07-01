@@ -1,4 +1,3 @@
-const { each } = require('lodash')
 const todo = require('../models/todo')
 
 let todoList = []

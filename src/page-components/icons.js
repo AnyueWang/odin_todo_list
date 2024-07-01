@@ -5,6 +5,7 @@ const IconAddTodo = require('../resources/icons/file-plus.svg')
 const IconDelete = require('../resources/icons/delete.svg')
 const IconUndone = require('../resources/icons/undone.svg')
 const IconDone = require('../resources/icons/done.svg')
+const IconEdit = require('../resources/icons/edit.svg')
 
 const addIcon = (Icon, parentDiv, explanation) => {
     const div = document.createElement('div')
@@ -23,6 +24,7 @@ module.exports = {
     IconDelete,
     IconUndone,
     IconDone,
+    IconEdit,
 
     addIcon
 }
