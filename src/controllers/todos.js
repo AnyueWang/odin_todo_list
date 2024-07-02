@@ -3,7 +3,6 @@ const todo = require('../models/todo')
 let todoList = []
 
 const getTodoList = () => todoList
-
 const addTodo = (todo) => todoList.push(todo)
 const addNewTodo = (title, dueDate, project, description, priority, isDone, id) => {
     const newTodo = todo.createTodo(title, dueDate, project, description, priority, isDone, id)

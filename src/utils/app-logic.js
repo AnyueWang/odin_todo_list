@@ -3,7 +3,6 @@ const projects = require('../controllers/projects')
 const todos = require('../controllers/todos')
 
 const dataProjects = local.getProjects()
-console.log(dataProjects)
 const dataTodos = local.getTodos()
 
 dataProjects.forEach(
