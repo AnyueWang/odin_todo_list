@@ -17,7 +17,7 @@ const isTitleExist = (title) => {
 const addProject = (project) => projectList.push(project)
 
 const addNewProject = (title, description) => {
-    if (isTitleExist(title)) return false
+    if (isTitleExist(title)) return 
     const newProject = project.createProject(title, description)
     addProject(newProject)
     return newProject

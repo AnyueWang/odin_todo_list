@@ -2,7 +2,7 @@ const warnings = require('../page-components/warnings')
 const icons = require('../page-components/icons')
 const resettings = require('../page-actions/resettings')
 const { compareAsc, format } = require('date-fns')
-const helper = require('../utils/helper')
+const app = require('./app-logic')
 const { defaultProject } = require('../controllers/projects')
 const ulProjects = document.querySelector("#project-list")
 const ulTodos = document.querySelector("#todo-list")
@@ -23,7 +23,7 @@ const display = () => {
     const iconAddProject = icons.addIcon(icons.IconAddProject, projectTitle, 'Create a new project.')
     const iconAddTodo = icons.addIcon(icons.IconAddTodo, taskTitle, 'Create a new task')
 
-    let targetProject = helper.defaultProject()
+    let targetProject = app.defaultProject()
 
     iconAddProject.addEventListener('click', () => {
         if (isEditing()) {
@@ -73,7 +73,7 @@ const display = () => {
             event.preventDefault()
             const title = document.querySelector('#new-project-title').value
             const description = document.querySelector('#new-project-description').value
-            if (helper.isTitleExist(title)) {
+            if (app.isTitleExist(title)) {
                 warnings.addWarningBefore(btnContainer, 'Project name already exists!')
                 return
             }
@@ -81,7 +81,7 @@ const display = () => {
                 warnings.addWarningBefore(btnContainer, 'Project name should not be empty!')
                 return
             }
-            helper.addNewProject(title, description)
+            app.addNewProject(title, description)
             document.querySelector('.project-new').remove()
             displayProjects()
         })
@@ -109,18 +109,16 @@ const display = () => {
             const project = document.querySelector('#new-task-project').value
             const description = document.querySelector('#new-task-description').value
             const priority = document.querySelector('#new-task-priority').value
-            const checklist = document.querySelector('#new-task-checklist').value
             if (title === '') {
                 warnings.addWarningBefore(addBtn.parentElement, 'Task name should not be empty!')
                 return
             }
-            helper.addNewTodo(
+            app.addNewTodo(
                 title,
                 new Date(dueDateSplits[0], dueDateSplits[1] - 1, dueDateSplits[2]),
-                helper.getProjectByName(project || 'Default'),
+                app.getProjectByName(project || 'Default'),
                 description,
                 Number(priority.split(' ')[0]) || 1,
-                checklist
             )
             displayRelatedTodos(targetProject)
         })
@@ -137,7 +135,7 @@ const display = () => {
 
     function displayProjects() {
         ulProjects.replaceChildren()
-        helper.getProjects().forEach(eachProject => {
+        app.getProjects().forEach(eachProject => {
             const newLi = document.createElement("li")
             const newAnchor = document.createElement('a')
             newAnchor.textContent = `${eachProject.title}`
@@ -155,7 +153,7 @@ const display = () => {
                 if (isEditing()) {
                     return
                 }
-                targetProject = helper.getProjectByName(eachBtn.textContent)
+                targetProject = app.getProjectByName(eachBtn.textContent)
                 displayRelatedTodos(targetProject)
                 const siblings = [...eachBtn.parentElement.parentElement.children]
                 siblings.forEach(eachChild => {
@@ -187,7 +185,7 @@ const display = () => {
                 resettings.closeExpandedTask()
 
                 const id = eachBtn.getAttribute('id')
-                const todo = helper.getTodoById(id)
+                const todo = app.getTodoById(id)
                 const collapse = document.createElement('div')
 
                 if (todo.isDone) {
@@ -216,22 +214,6 @@ const display = () => {
                 const detailPriority = document.createElement('p')
                 detailPriority.textContent = `${todo.priority} (${priorities[todo.priority]})`
                 collapse.appendChild(detailPriority)
-                const titleChecklist = document.createElement('p')
-                titleChecklist.textContent = `Checklist:`
-                collapse.appendChild(titleChecklist)
-                if (todo.checklist) {
-                    const detailChecklist = document.createElement('ol')
-                    todo.checklist.forEach(eachItem => {
-                        const liItem = document.createElement('li')
-                        liItem.textContent = eachItem
-                        detailChecklist.appendChild(liItem)
-                    })
-                    collapse.appendChild(detailChecklist)
-                } else {
-                    const detailChecklist = document.createElement('p')
-                    detailChecklist.textContent = '(none)'
-                    collapse.appendChild(detailChecklist)
-                }
                 eachBtn.parentElement.appendChild(collapse)
 
             })
@@ -240,7 +222,7 @@ const display = () => {
 
     function displayRelatedTodos(project) {
         ulTodos.replaceChildren()
-        const todos = helper.getTodosByProject(project)
+        const todos = app.getTodosByProject(project)
         const todosOrderedByTime = todos.sort((a, b) => {
             if (a.isDone !== b.isDone) {
                 return a.isDone - b.isDone
@@ -275,8 +257,8 @@ const display = () => {
             iconDelete.addEventListener('click', event => {
                 event.stopPropagation()
                 const id = event.target.closest('.task-nav').id
-                const deletedTodo = helper.getTodoById(id)
-                helper.deleteTodo(deletedTodo)
+                const deletedTodo = app.getTodoById(id)
+                app.deleteTodo(deletedTodo)
                 document.getElementById(id).parentElement.remove()
             })
 
@@ -286,7 +268,7 @@ const display = () => {
                     return
                 }
                 const id = event.target.closest('.task-nav').id
-                const updatedTodo = helper.getTodoById(id)
+                const updatedTodo = app.getTodoById(id)
                 editTaskInfo(id)
 
                 const addBtn = document.querySelector('.add-btn')
@@ -300,17 +282,18 @@ const display = () => {
                     const project = document.querySelector('#new-task-project').value
                     const description = document.querySelector('#new-task-description').value
                     const priority = document.querySelector('#new-task-priority').value
-                    const checklist = document.querySelector('#new-task-checklist').value
                     if (title === '') {
                         warnings.addWarningBefore(addBtn.parentElement, 'Task name should not be empty!')
                         return
                     }
-                    updatedTodo.title = title
-                    updatedTodo.dueDate = new Date(dueDateSplits[0], dueDateSplits[1] - 1, dueDateSplits[2])
-                    updatedTodo.project = helper.getProjectByName(project)
-                    updatedTodo.description = description
-                    updatedTodo.priority = Number(priority.split(' ')[0]) || 1
-                    updatedTodo.checklist = checklist
+                    app.updateTodo(
+                        updatedTodo.id, 
+                        title, 
+                        new Date(dueDateSplits[0], dueDateSplits[1] - 1, dueDateSplits[2]), 
+                        app.getProjectByName(project),
+                        description,
+                        Number(priority.split(' ')[0]) || 1,
+                    )
 
                     displayRelatedTodos(targetProject)
                 })
@@ -327,7 +310,7 @@ const display = () => {
 
             iconStatus.addEventListener('click', event => {
                 event.stopPropagation()
-                eachTodo.toggleDone()
+                app.toggleDone(eachTodo)
                 displayRelatedTodos(targetProject)
             })
         })
@@ -371,7 +354,7 @@ const editTaskInfo = (id = undefined) => {
     projectLabel.textContent = 'Project: '
     const projectInput = document.createElement('select')
     projectInput.setAttribute('id', 'new-task-project')
-    helper.getProjects().forEach(project => {
+    app.getProjects().forEach(project => {
         const option = document.createElement('option')
         option.textContent = project.title
         option.setAttribute('value', project.title)
@@ -401,14 +384,6 @@ const editTaskInfo = (id = undefined) => {
     })
     newDetailsForm.append(priorityLabel)
     newDetailsForm.append(priorityInput)
-
-    const checklistLabel = document.createElement('label')
-    checklistLabel.setAttribute('for', 'new-task-checklist')
-    checklistLabel.textContent = 'Checklist: '
-    const checklistInput = document.createElement('input')
-    checklistInput.setAttribute('id', 'new-task-checklist')
-    newDetailsForm.append(checklistLabel)
-    newDetailsForm.append(checklistInput)
 
     newDetailsForm.classList.add('task-details')
 
@@ -453,7 +428,7 @@ const editTaskInfo = (id = undefined) => {
         targetLi.classList.add('task-new')
         targetLi.appendChild(newDetailsForm)
 
-        const targetTodo = helper.getTodoById(id)
+        const targetTodo = app.getTodoById(id)
         titleInput.value = targetTodo.title
         const dueDate = targetTodo.dueDate
         const month = (dueDate.getMonth() + 1) < 10 ? '0' + String(dueDate.getMonth() + 1) : String(dueDate.getMonth() + 1)
@@ -462,6 +437,5 @@ const editTaskInfo = (id = undefined) => {
         projectInput.value = targetTodo.project.title
         descriptionInput.value = targetTodo.description
         priorityInput.value = targetTodo.priority
-        checklistInput.value = targetTodo.checklist
     }
 }
